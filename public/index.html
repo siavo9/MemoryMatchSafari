@@ -314,6 +314,25 @@
     font-style: italic;
   }
 
+  .more-games {
+    text-align: center;
+    margin-top: 22px;
+    font-family: 'IM Fell English SC', serif;
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+  .more-games a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+    padding-bottom: 1px;
+    letter-spacing: 0.05em;
+  }
+  .more-games a:hover {
+    color: var(--accent-dark);
+    border-bottom-style: solid;
+  }
+
   .toast {
     position: fixed;
     bottom: 24px;
@@ -348,6 +367,10 @@
         <button class="btn" id="playBtn">Play Now</button>
       </div>
       <div class="best-banner" id="bestBanner"></div>
+      <p class="more-games">
+        Try more fun brain games at
+        <a href="https://zaksbraingames.com/" target="_blank" rel="noopener noreferrer">zaksbraingames.com</a>
+      </p>
     </div>
     <p class="footer">Match the creatures to their names. Five wrong guesses and the expedition ends.</p>
   </section>
