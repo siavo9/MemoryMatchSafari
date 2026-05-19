@@ -46,7 +46,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: 24px 16px 60px;
+    padding: 80px 16px 60px;
   }
 
   /* Decorative paper edges */
@@ -349,9 +349,205 @@
     pointer-events: none;
   }
   .toast.show { opacity: 1; }
+
+  /* ---------- Top Navigation (persistent on every screen) ---------- */
+  .topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 70px 10px 16px;
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink-soft);
+    box-shadow: 0 2px 0 var(--shadow);
+    font-family: 'IM Fell English SC', serif;
+    flex-wrap: wrap;
+  }
+  .topnav .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IM Fell English SC', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--ink-soft);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: transform 0.08s ease, background 0.15s ease;
+  }
+  .nav-link:hover {
+    background: rgba(255,255,255,0.35);
+    transform: translate(-1px,-1px);
+  }
+  .nav-link.primary {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ---------- How to Play Modal ---------- */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(40, 25, 10, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 16px;
+  }
+  .modal-backdrop.show { display: flex; animation: fadeIn 0.25s ease; }
+  .modal {
+    background: var(--paper);
+    border: 2px solid var(--ink-soft);
+    border-radius: 6px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 26px 26px 22px;
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    color: var(--ink);
+  }
+  .modal::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(60,35,10,0.4);
+    pointer-events: none;
+    border-radius: 4px;
+  }
+  .modal h2 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+  .modal p { margin: 8px 0; line-height: 1.4; }
+  .modal ul { margin: 10px 0 14px; padding-left: 22px; }
+  .modal li { margin: 4px 0; line-height: 1.4; }
+  .modal .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-family: 'IM Fell English SC', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+  .modal .close-btn:hover { color: var(--accent); }
+
+  /* ---------- Inline "How to Play" hint (on screens) ---------- */
+  .howto-inline {
+    margin-top: 18px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.35);
+    border-left: 4px solid var(--khaki);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .howto-inline h3 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .howto-inline ul { margin: 6px 0 0; padding-left: 20px; }
+  .howto-inline li { margin: 2px 0; }
+
+  /* ---------- Cheer banner ---------- */
+  .cheer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    font-family: 'IM Fell English SC', serif;
+    font-size: clamp(2rem, 7vw, 4rem);
+    color: var(--accent);
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 var(--shadow);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 150;
+    transition: transform 0.35s cubic-bezier(0.2, 1.4, 0.5, 1), opacity 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .cheer.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* ---------- Confetti / fireworks ---------- */
+  .fx-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 140;
+  }
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    top: -20px;
+    opacity: 0.95;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.6; }
+  }
+  .spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkBurst 0.9s ease-out forwards;
+  }
+  @keyframes sparkBurst {
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.4); }
+  }
+
+  /* ---------- Mobile spacing tweaks ---------- */
+  @media (max-width: 520px) {
+    body { padding-top: 110px; }
+    .topnav { padding-right: 60px; }
+    .nav-link { font-size: 0.85rem; padding: 5px 8px; }
+    .mute-toggle { width: 38px; height: 38px; font-size: 1rem; }
+  }
 </style>
 </head>
 <body>
+
+<nav class="topnav" aria-label="Main">
+  <div class="nav-group">
+    <button class="nav-link primary" id="navHomeBtn" type="button" aria-label="Go to game home">🏠 Home</button>
+    <a class="nav-link" href="https://zaksbraingames.com" id="navParentLink">🎮 Zak's Brain Games</a>
+  </div>
+  <div class="nav-group">
+    <button class="nav-link" id="navHowToBtn" type="button" aria-label="How to play">📖 How to Play</button>
+  </div>
+</nav>
 
 <button class="mute-toggle" id="muteBtn" title="Toggle sound" aria-label="Toggle sound">🔊</button>
 
@@ -367,6 +563,16 @@
         <button class="btn" id="playBtn">Play Now</button>
       </div>
       <div class="best-banner" id="bestBanner"></div>
+      <div class="howto-inline">
+        <h3>How to Play</h3>
+        <p>Flip two cards at a time and find the animal that matches its name. Match all the pairs to climb to the next level — but watch out, five wrong guesses ends your expedition!</p>
+        <ul>
+          <li>👆 Tap or click a card to flip it.</li>
+          <li>🔁 Find the animal picture that matches its name.</li>
+          <li>🏆 Match every pair to win the level.</li>
+          <li>❌ Five wrong guesses ends the game.</li>
+        </ul>
+      </div>
       <p class="more-games">
         Try more fun brain games at
         <a href="https://zaksbraingames.com/">zaksbraingames.com</a>
@@ -383,6 +589,15 @@
         <div class="wrongs" id="wrongsLabel">Wrong: 0 / 5</div>
       </div>
       <div class="grid" id="grid"></div>
+      <div class="howto-inline">
+        <h3>How to Play</h3>
+        <p>Flip two cards and try to match each animal to its name. Match them all to win the level!</p>
+        <ul>
+          <li>👆 Click a card to flip it.</li>
+          <li>🔁 Find the animal that matches its name.</li>
+          <li>❌ Don't get 5 wrong — the expedition ends!</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -394,6 +609,15 @@
       <div class="fact" id="factBox"><strong>Did you know?</strong> <span id="factText"></span></div>
       <div class="actions">
         <button class="btn" id="nextLevelBtn">Onward to Next Level</button>
+      </div>
+      <div class="howto-inline">
+        <h3>How to Play</h3>
+        <p>Great job, explorer! Tap "Onward" to take on the next level. Match all the pairs and avoid five wrong guesses.</p>
+        <ul>
+          <li>👆 Flip a card to peek.</li>
+          <li>🔁 Match the animal to its name.</li>
+          <li>🏆 Clear every pair to keep going!</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -409,10 +633,40 @@
         <button class="btn" id="shareBtn">Share Results</button>
         <button class="btn secondary" id="playAgainBtn">Play Again</button>
       </div>
+      <div class="howto-inline">
+        <h3>How to Play</h3>
+        <p>You're awesome! Tap "Play Again" to start a fresh expedition. Match pairs, win levels, and try to beat your best!</p>
+        <ul>
+          <li>👆 Flip cards to find pairs.</li>
+          <li>🔁 Match the animal to its name.</li>
+          <li>🏆 Win every level you can — 5 wrong ends the run.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
 </div>
+
+<!-- ============ HOW TO PLAY MODAL ============ -->
+<div class="modal-backdrop" id="howtoModal" role="dialog" aria-modal="true" aria-labelledby="howtoTitle">
+  <div class="modal">
+    <button class="close-btn" id="howtoCloseBtn" aria-label="Close">✕</button>
+    <h2 id="howtoTitle">How to Play</h2>
+    <p>Welcome, explorer! In Memory Match Safari you flip cards to find pairs — match each animal picture to its name.</p>
+    <p>Clear every pair to win a level and move on to a tougher one. But be careful: five wrong guesses and the expedition ends!</p>
+    <ul>
+      <li>👆 Tap or click a card to flip it over.</li>
+      <li>🔁 Match the animal picture with its name.</li>
+      <li>🏆 Match every pair to clear the level.</li>
+      <li>📚 Learn a fun animal fact after every level.</li>
+      <li>❌ Five wrong guesses ends your expedition.</li>
+      <li>🔊 Tap the speaker icon to turn sound on or off.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+<div class="cheer" id="cheer" aria-hidden="true"></div>
 
 <div class="toast" id="toast"></div>
 
@@ -607,6 +861,82 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 1800);
 }
 
+/* --------- Positive feedback (cheers + fx) --------- */
+const MATCH_CHEERS = [
+  'Great job!', 'Nice match!', 'Amazing!', 'Bravo!',
+  'You got it!', 'Brilliant!', 'Well spotted!', 'Fantastic!',
+  'Way to go!', 'Sharp eyes!', 'Awesome!', 'Yes!'
+];
+const WIN_CHEERS = [
+  'Level Cleared!', 'Magnificent!', 'Expedition Success!',
+  'You did it!', 'Spectacular!', 'Champion Explorer!'
+];
+
+const CONFETTI_COLORS = ['#8b3a1f', '#a89060', '#4d6a2c', '#c9b483', '#d4a017', '#3d2b18', '#c8dab0'];
+
+function showCheer(text, duration = 900) {
+  const el = document.getElementById('cheer');
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(showCheer._t);
+  showCheer._t = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function spawnConfetti(count = 60, durationMs = 2200) {
+  const layer = document.getElementById('fxLayer');
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = pick(CONFETTI_COLORS);
+    const dur = (1.6 + Math.random() * 1.4);
+    piece.style.animationDuration = dur + 's';
+    piece.style.animationDelay = (Math.random() * 0.4) + 's';
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    layer.appendChild(piece);
+    setTimeout(() => piece.remove(), (dur + 0.5) * 1000);
+  }
+}
+
+function spawnSparkBurst(x, y, count = 14) {
+  const layer = document.getElementById('fxLayer');
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    s.style.background = pick(CONFETTI_COLORS);
+    const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.4);
+    const dist = 60 + Math.random() * 50;
+    s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    layer.appendChild(s);
+    setTimeout(() => s.remove(), 950);
+  }
+}
+
+function fireworks(bursts = 5) {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  for (let i = 0; i < bursts; i++) {
+    setTimeout(() => {
+      const x = 80 + Math.random() * (w - 160);
+      const y = 80 + Math.random() * (h * 0.55);
+      spawnSparkBurst(x, y, 18);
+    }, i * 220);
+  }
+}
+
+/* --------- How to Play modal --------- */
+function openHowTo() {
+  document.getElementById('howtoModal').classList.add('show');
+}
+function closeHowTo() {
+  document.getElementById('howtoModal').classList.remove('show');
+}
+
 /* --------- Best Score (localStorage) --------- */
 function getBest() {
   try { return parseInt(localStorage.getItem('mms_best') || '0', 10) || 0; }
@@ -730,11 +1060,20 @@ function onCardClick(cardEl) {
     matchedCount++;
     firstChoice = null;
     sounds.match();
+
+    // Positive feedback on every successful match
+    showCheer(pick(MATCH_CHEERS), 850);
+    const rect = b.getBoundingClientRect();
+    spawnSparkBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 12);
+
     if (matchedCount === totalPairs) {
       // Level won!
       lock = true;
       setTimeout(() => {
         sounds.win();
+        showCheer(pick(WIN_CHEERS), 1500);
+        spawnConfetti(80);
+        fireworks(6);
         onLevelWon();
       }, 500);
     }
@@ -820,6 +1159,20 @@ document.getElementById('playAgainBtn').addEventListener('click', () => {
   buildLevel(1);
 });
 document.getElementById('shareBtn').addEventListener('click', shareResults);
+
+/* --------- Top nav wiring --------- */
+document.getElementById('navHomeBtn').addEventListener('click', () => {
+  renderBestBanner();
+  showScreen('screen-start');
+});
+document.getElementById('navHowToBtn').addEventListener('click', openHowTo);
+document.getElementById('howtoCloseBtn').addEventListener('click', closeHowTo);
+document.getElementById('howtoModal').addEventListener('click', (e) => {
+  if (e.target.id === 'howtoModal') closeHowTo();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeHowTo();
+});
 
 renderBestBanner();
 </script>
